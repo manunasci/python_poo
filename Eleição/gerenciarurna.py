@@ -35,4 +35,5 @@ def emetir_zeresima(urna : Urna):
 def finalizar(urna : Urna):
     print(urna)
     urna.encerrar()
+    #terminado
 
