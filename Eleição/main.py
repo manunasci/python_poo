@@ -1,28 +1,26 @@
 import pickle
 import traceback
-
+from eleicao import Urna
 from common import *
+import gerenciarurna
 
 FILE_ELEITORES = 'eleitores.pkl'
 FILE_CANDIDATO = 'candidatos.pkl'
 
-def menu_eleitor():
+def menu():
     print("1-Novo Eleitor")
     print("2-Atualizar Eleitor")
-    print("3-Sair")
-    op = int(input("Digite a opcao [1,2,3]? "))
-    while op not in (1, 2, 3):
-        op = int(input("Digite a opcao [1,2,3]? "))
+    print("3-Novo candidato?")
+    print("4-Lista candidatos?")
+    print("5-Iniciar Urna")
+    print("6-Testar Urna")
+    print("7-Zeresima")
+    print("8-Encerrar Urna")
+    print("9-Sair")
+    op = int(input("Digite a opcao [1 a 9]? "))
+    while op not in (1, 10):
+        op = int(input("Digite a opcao [1 a 9]? "))
     return op
-
-def menu_candidato():
-    print("Novo candidato?")
-    print("Lista candidatos?")
-    print("Sair")
-    op = int(input("Digite a opcao [1,2,3]?"))
-    while op not in (1, 2, 3):
-        op = int(input("Digite a opcao [1,2,3]"))
-        return  op
 
 def inserir_candidato(candidatos):
     numero = int(input("Digite o numero"))
@@ -107,13 +105,26 @@ if __name__ == "__main__":
     opcao = 1
     while opcao in (1,2,3):
         try:
-            opcao = menu_eleitor()
+            opcao = menu()
 
             if opcao == 1:
                 inserir_eleitor(eleitores)
             elif opcao == 2:
                 atualizar_eleitor(eleitores)
             elif opcao == 3:
+                inserir_candidato(candidatos)
+            elif opcao == 4:
+                listar_candidatos(candidatos)
+            elif opcao == 5:
+                urna = gerenciarurna.iniciar_urna(eleitores.values(),
+                                                  candidatos.values())
+            elif opcao == 6:
+                gerenciarurna.votar(urna)
+            elif opcao == 7:
+                gerenciarurna.emetir_zeresima(urna)
+            elif opcao == 8:
+                gerenciarurna.finalizar(urna)
+            elif opcao == 9:
                 print("Saindo!")
                 break
         except Exception as e:
